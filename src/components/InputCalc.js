@@ -1,50 +1,52 @@
-import { useContext} from "react";
+import { useContext, useState,useRef } from "react";
 import { AppContext } from '../context/AppContext';
 import {
-    Button,Container, Label, Input, SelectTip, Span
+    Button, Container, Label, Input, SelectTip, Span, ContainerPeople
 } from "./InputComponents"
 
 const InputCalc = () => {
     const { data, setData } = useContext(AppContext);
+    const tips = [5, 10, 15, 25, 50];
+    
+    const {selectedTip, setSelectedTip} = useContext(AppContext);
+
+    const handleTipClick = (tip) => {
+        setSelectedTip(tip);
+        setData({ ...data, selectTip: tip });
+    };
+
+
 
     return (
         <Container>
             <Label>
                 Bill
-                <Input type="number" min="0" placeholder="$" value={data.bill} onChange={(e) => setData({ ...data, bill: e.target.value })} />
+                <Input type="number" min="0" placeholder="0" value={data.bill} onChange={(e) => setData({ ...data, bill: e.target.value })} />
             </Label>
             <Label>
                 Select Tip %
                 <SelectTip>
-                    <Button
-                        onClick={() => setData({ ...data, selectTip: 5 })}
-
-                    >5%</Button>
-                    <Button
-                        onClick={() => setData({ ...data, selectTip: 10 })}
-
-                    >10%</Button>
-                    <Button
-                        onClick={() => setData({ ...data, selectTip: 15 })}
-
-                    >15%</Button>
-                    <Button
-                        onClick={() => setData({ ...data, selectTip: 25 })}
-                    >25%</Button>
-                    <Button
-                        onClick={() => setData({ ...data, selectTip: 50 })}
-                    >50%</Button>
-                    <Input value={data.selectTip} type="number" placeholder="Custom" min="1" onChange={(e) => setData({ ...data, selectTip: e.target.value })}></Input>
+                    {tips.map((tip) => (
+                        <Button
+                            key={tip}
+                            isSelected={selectedTip === tip}
+                            onClick={() => handleTipClick(tip)}>{tip}%
+                        </Button>
+                    ))}
+                    <Input
+                        value={data.selectTip} type="number" placeholder="Custom" min="1" onChange={(e) => setData({ ...data, selectTip: e.target.value })}></Input>
                 </SelectTip>
             </Label>
             <Label>
-                Number of People
-                <Span> {data.numberOfPeople === 0 ? "Can't be zero" : ""}</Span>
+                <ContainerPeople>
+                    <p>Number of People</p>
+                    {data.numberOfPeople === null || data.numberOfPeople > 0 ? null : <Span>Can't be zero</Span>}
+                </ContainerPeople>
                 <Input
-                    value={data.numberOfPeople}
                     type="number"
                     min="1"
-                    placeholder="$"
+                    value={data.numberOfPeople}
+                    placeholder="0"
                     onChange={(e) => setData({ ...data, numberOfPeople: e.target.value })}
                 />
             </Label>

@@ -14,11 +14,12 @@ function App() {
   const Container = styled.div`
     display: flex;
     justify-content: center;
-    gap: 20px;
+    flex-direction: row;
+    gap: 30px;
     border-radius: 10px;
     background-color: hsl(0, 0%, 100%);
     padding: 20px;
-    max-width: 100%;
+    max-width: 1000px;
 
     @media screen and (max-width: 1068px) {
       flex-direction: column;

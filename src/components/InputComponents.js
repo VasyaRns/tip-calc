@@ -3,9 +3,16 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border-radius: 10px;
   background-color: hsl(0, 0%, 100%);
 `;
+export const ContainerPeople = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+  `
 
 export const SelectTip = styled.div`
   display: grid;
@@ -33,10 +40,12 @@ export const Input = styled.input`
   border: none;
   outline: none;
   margin: 5px;
+
   padding: 5px;
   color: hsl(183, 100%, 15%);
   background-color: hsl(189, 41%, 97%);
   font-size: 24px;
+  text-align: right;
 
   &:focus {
     outline: none !important;
@@ -60,9 +69,12 @@ export const Button = styled.button`
   color: hsl(0, 0%, 100%);
   background: hsl(183, 100%, 15%);
   font-size: 24px;
-  &:focus {
+  ${({ isSelected }) =>
+    isSelected &&
+    `
     background-color: hsl(172, 67%, 45%);
-  }
+  `}
+
   @media screen and (max-width: 768px) {
     font-size: 20px;
   }
